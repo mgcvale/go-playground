@@ -1,9 +1,9 @@
 package models
 
 import (
+	"awesomeProject/util"
 	"crypto/rand"
 	"encoding/base64"
-	"fmt"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
@@ -33,7 +33,7 @@ func generateAccessToken(size int) (string, error) {
 func HashPassword(password string) ([]byte, error) {
 	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		return nil, err
+		return nil, util.NewAppError(util.InternalError, "Error generating hash form password")
 	}
 
 	return hash, nil
@@ -42,12 +42,12 @@ func HashPassword(password string) ([]byte, error) {
 func NewUser(username string, password string) (*User, error) {
 	hash, err := HashPassword(password)
 	if err != nil {
-		return nil, fmt.Errorf("Error hasing password with bcrypt: %v", err)
+		return nil, err
 	}
 
 	accessToken, err := generateAccessToken(DefaultTokenSize)
 	if err != nil {
-		return nil, fmt.Errorf("Error creating access token: %v", err)
+		return nil, util.NewAppError(util.InternalError, "Error creating random access token for user creation")
 	}
 
 	user := &User{
