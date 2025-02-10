@@ -2,6 +2,8 @@ package main
 
 import (
 	"awesomeProject/config"
+	"awesomeProject/route"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -12,4 +14,7 @@ func main() {
 		panic("Error migrating database")
 	}
 
+	r := gin.Default()
+	route.RegisterUserRoutes(r)
+	r.Run(":8000")
 }

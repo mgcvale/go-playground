@@ -18,6 +18,17 @@ type User struct {
 	AccessToken  string `json:"access_token"`
 }
 
+type AuthUserRequest struct {
+	Username    string `json:"username"`
+	Password    string `json:"password"`
+	AccessToken string `json:"access_token"`
+}
+
+type CreateUserRequest struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
 func generateAccessToken(size int) (string, error) {
 	tokenBytes := make([]byte, size)
 
