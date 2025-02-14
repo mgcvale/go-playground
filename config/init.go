@@ -1,7 +1,7 @@
 package config
 
 import (
-	"awesomeProject/models"
+	"awesomeProject/internal/models"
 	"fmt"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
